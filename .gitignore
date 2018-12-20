@@ -3,4 +3,4 @@ tcl/
 .vscode/
 __pycache__/
 readmepic.jpg
-.ebignore
+config.py
