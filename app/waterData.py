@@ -1,6 +1,6 @@
-from datetime import datetime
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from app.init import db
+from app.models import Reading
 
 def formatReadingDataForDisplay(data):
     formattedTime = data[0].strftime('%H:%M %d/%m/%Y')
@@ -27,18 +27,3 @@ def insertNewReadingToDB(waterData):
         db.session.close()
     except:
         handleError(reading)
-
-app = Flask(__name__)
-app.config.from_object('config')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
-class Reading(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    litres = db.Column(db.Numeric, nullable = False)
-    percentage = db.Column(db.Integer, nullable = False)
-    created_on = db.Column(db.DateTime, default=datetime.now, index = True)    
-
-    def __init__(self, litres, percentage, created_on=None):
-        self.litres = litres
-        self.percentage = percentage
